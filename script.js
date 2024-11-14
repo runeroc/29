@@ -1,4 +1,3 @@
-// Клас для гри
 class Game {
   constructor(title, description, imageUrl) {
     this.title = title;
@@ -7,33 +6,47 @@ class Game {
   }
 
   render() {
-    return `
-      <div class="game">
-        <h3>${this.title}</h3>
-        <p>${this.description}</p>
-        <img src="${this.imageUrl}" alt="${this.title}">
-      </div>
-    `;
+    const gameElement = document.createElement('div');
+    gameElement.classList.add('game');
+    
+    const titleElement = document.createElement('h3');
+    titleElement.textContent = this.title;
+    gameElement.appendChild(titleElement);
+    
+    const descriptionElement = document.createElement('p');
+    descriptionElement.textContent = this.description;
+    gameElement.appendChild(descriptionElement);
+    
+    const imageElement = document.createElement('img');
+    imageElement.src = this.imageUrl;
+    imageElement.alt = this.title;
+    gameElement.appendChild(imageElement);
+    
+    return gameElement;
   }
 }
 
-// Функція для збереження ігор у LocalStorage
-function saveGames(games) {
-  localStorage.setItem('games', JSON.stringify(games));
+class GameStorage {
+  static getGames() {
+    return JSON.parse(localStorage.getItem('games')) || [];
+  }
+
+  static saveGames(games) {
+    localStorage.setItem('games', JSON.stringify(games));
+  }
 }
 
-// Функція для завантаження ігор з LocalStorage
 function loadGames() {
-  const games = JSON.parse(localStorage.getItem('games')) || [];
   const gamesContainer = document.getElementById('games-container');
-  gamesContainer.innerHTML = '';
-  games.forEach(game => {
-    const gameElement = new Game(game.title, game.description, game.imageUrl);
-    gamesContainer.innerHTML += gameElement.render();
+  gamesContainer.innerHTML = ''; // Очистка контейнера
+
+  const games = GameStorage.getGames();
+  games.forEach(gameData => {
+    const game = new Game(gameData.title, gameData.description, gameData.imageUrl);
+    gamesContainer.appendChild(game.render());
   });
 }
 
-// Додавання нової гри
 document.getElementById('add-game-form').addEventListener('submit', function (e) {
   e.preventDefault();
 
@@ -41,21 +54,30 @@ document.getElementById('add-game-form').addEventListener('submit', function (e)
   const description = document.getElementById('game-description').value;
   const imageUrl = document.getElementById('game-image').value;
 
+  // Перевірка на порожні значення
+  if (!title || !description || !imageUrl) {
+    alert("Будь ласка, заповніть усі поля!");
+    return;
+  }
+
+  // Перевірка на дублікати
+  const existingGames = GameStorage.getGames();
+  if (existingGames.some(game => game.title === title)) {
+    alert("Ця гра вже є в каталозі!");
+    return;
+  }
+
+  // Додавання нової гри
   const newGame = new Game(title, description, imageUrl);
-
-  // Отримуємо існуючі ігри з LocalStorage
-  const existingGames = JSON.parse(localStorage.getItem('games')) || [];
   existingGames.push({ title, description, imageUrl });
+  GameStorage.saveGames(existingGames);
 
-  // Зберігаємо нові ігри
-  saveGames(existingGames);
-
-  // Оновлюємо відображення
+  // Оновлення відображення
   loadGames();
 
-  // Очищаємо форму після додавання
+  // Очищення форми
   document.getElementById('add-game-form').reset();
 });
 
-// Завантажуємо ігри при завантаженні сторінки
+// Завантаження ігор при завантаженні сторінки
 document.addEventListener('DOMContentLoaded', loadGames);
