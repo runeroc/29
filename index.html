@@ -1,50 +1,50 @@
 <!DOCTYPE html>
 <html lang="uk">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EXLTO-GAMES</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Каталог ігор. Дізнайтеся про нові та популярні ігри на нашому сайті.">
+  <title>Каталог Ігор</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>EXLTO-GAMES</h1>
-            <button id="theme-toggle" aria-label="Переключить тему">🌙</button>
-        </div>
-    </header>
 
-    <main class="container">
-        <section>
-            <h2>Каталог Игр</h2>
-            <div class="filters">
-                <input type="text" id="search" placeholder="Поиск..." aria-label="Поиск игр">
-                <select id="filter" aria-label="Фильтр по категории">
-                    <option value="">Все категории</option>
-                    <option value="action">Action</option>
-                    <option value="adventure">Adventure</option>
-                    <option value="strategy">Strategy</option>
-                    <option value="rpg">RPG</option>
-                </select>
-                <select id="sort" aria-label="Сортировка">
-                    <option value="default">Сортировать</option>
-                    <option value="alphabetical">По алфавиту</option>
-                </select>
-            </div>
-            <div id="loader" class="loader">Загрузка...</div>
-            <div id="game-list" class="game-list"></div>
-            <nav class="pagination">
-                <button id="prev-page">« Назад</button>
-                <span id="page-numbers"></span>
-                <button id="next-page">Вперед »</button>
-            </nav>
-        </section>
-    </main>
+<header>
+  <nav>
+    <ul>
+      <li><a href="#">Головна</a></li>
+      <li><a href="#">Ігри</a></li>
+      <li><a href="#">Контакти</a></li>
+    </ul>
+  </nav>
+</header>
 
-    <footer>
-        <p>© 2024 EXLTO-GAMES. Все права защищены.</p>
-    </footer>
-    <script src="script.js" defer></script>
+<main>
+  <section id="add-game-section">
+    <h2>Додати нову гру</h2>
+    <form id="add-game-form">
+      <label for="game-title">Назва гри:</label>
+      <input type="text" id="game-title" required>
+
+      <label for="game-description">Опис гри:</label>
+      <textarea id="game-description" required></textarea>
+
+      <label for="game-image">Зображення гри (URL):</label>
+      <input type="url" id="game-image" required>
+
+      <button type="submit">Додати гру</button>
+    </form>
+  </section>
+
+  <section id="games-container">
+    <!-- Ігри будуть завантажуватись тут через JavaScript -->
+  </section>
+</main>
+
+<footer>
+  <p>&copy; 2024 Ігровий сайт</p>
+</footer>
+
+<script src="script.js"></script>
 </body>
 </html>
