@@ -1,84 +1,61 @@
-const games = [
-    { title: "Game A", category: "action", image: "game-a.jpg", description: "Action game", downloadLink: "#" },
-    { title: "Game B", category: "rpg", image: "game-b.jpg", description: "RPG game", downloadLink: "#" },
-    { title: "Game C", category: "strategy", image: "game-c.jpg", description: "Strategy game", downloadLink: "#" },
-    // Добавьте больше игр
-];
+// Клас для гри
+class Game {
+  constructor(title, description, imageUrl) {
+    this.title = title;
+    this.description = description;
+    this.imageUrl = imageUrl;
+  }
 
-let currentPage = 1;
-const gamesPerPage = 4;
-
-const gameList = document.getElementById("game-list");
-const searchInput = document.getElementById("search");
-const filterSelect = document.getElementById("filter");
-const sortSelect = document.getElementById("sort");
-const loader = document.getElementById("loader");
-const themeToggle = document.getElementById("theme-toggle");
-
-function toggleTheme() {
-    const theme = document.documentElement.getAttribute("data-theme");
-    document.documentElement.setAttribute("data-theme", theme === "dark" ? "light" : "dark");
+  render() {
+    return `
+      <div class="game">
+        <h3>${this.title}</h3>
+        <p>${this.description}</p>
+        <img src="${this.imageUrl}" alt="${this.title}">
+      </div>
+    `;
+  }
 }
 
-themeToggle.addEventListener("click", toggleTheme);
-
-function displayGames(page = 1) {
-    loader.style.display = "block";
-    setTimeout(() => {
-        loader.style.display = "none";
-        const filteredGames = filterAndSortGames();
-        const start = (page - 1) * gamesPerPage;
-        const paginatedGames = filteredGames.slice(start, start + gamesPerPage);
-
-        gameList.innerHTML = paginatedGames.map(game => `
-            <div class="game-item">
-                <img src="${game.image}" alt="${game.title}">
-                <div class="game-info">
-                    <h3>${game.title}</h3>
-                    <p>${game.description}</p>
-                    <a href="${game.downloadLink}" target="_blank">Загрузить</a>
-                </div>
-            </div>
-        `).join("");
-
-        updatePagination(filteredGames.length);
-    }, 500);
+// Функція для збереження ігор у LocalStorage
+function saveGames(games) {
+  localStorage.setItem('games', JSON.stringify(games));
 }
 
-function filterAndSortGames() {
-    const searchValue = searchInput.value.toLowerCase();
-    const categoryValue = filterSelect.value;
-    const sortValue = sortSelect.value;
-
-    let filtered = games.filter(game =>
-        game.title.toLowerCase().includes(searchValue) &&
-        (!categoryValue || game.category === categoryValue)
-    );
-
-    if (sortValue === "alphabetical") {
-        filtered.sort((a, b) => a.title.localeCompare(b.title));
-    }
-
-    return filtered;
+// Функція для завантаження ігор з LocalStorage
+function loadGames() {
+  const games = JSON.parse(localStorage.getItem('games')) || [];
+  const gamesContainer = document.getElementById('games-container');
+  gamesContainer.innerHTML = '';
+  games.forEach(game => {
+    const gameElement = new Game(game.title, game.description, game.imageUrl);
+    gamesContainer.innerHTML += gameElement.render();
+  });
 }
 
-function updatePagination(totalGames) {
-    const pageNumbers = document.getElementById("page-numbers");
-    const totalPages = Math.ceil(totalGames / gamesPerPage);
-    pageNumbers.innerHTML = Array.from({ length: totalPages }, (_, i) => `
-        <button ${i + 1 === currentPage ? 'class="active"' : ''}>${i + 1}</button>
-    `).join("");
+// Додавання нової гри
+document.getElementById('add-game-form').addEventListener('submit', function (e) {
+  e.preventDefault();
 
-    pageNumbers.querySelectorAll("button").forEach((button, index) => {
-        button.addEventListener("click", () => {
-            currentPage = index + 1;
-            displayGames(currentPage);
-        });
-    });
-}
+  const title = document.getElementById('game-title').value;
+  const description = document.getElementById('game-description').value;
+  const imageUrl = document.getElementById('game-image').value;
 
-searchInput.addEventListener("input", () => displayGames(1));
-filterSelect.addEventListener("change", () => displayGames(1));
-sortSelect.addEventListener("change", () => displayGames(1));
+  const newGame = new Game(title, description, imageUrl);
 
-displayGames();
+  // Отримуємо існуючі ігри з LocalStorage
+  const existingGames = JSON.parse(localStorage.getItem('games')) || [];
+  existingGames.push({ title, description, imageUrl });
+
+  // Зберігаємо нові ігри
+  saveGames(existingGames);
+
+  // Оновлюємо відображення
+  loadGames();
+
+  // Очищаємо форму після додавання
+  document.getElementById('add-game-form').reset();
+});
+
+// Завантажуємо ігри при завантаженні сторінки
+document.addEventListener('DOMContentLoaded', loadGames);
