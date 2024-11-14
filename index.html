@@ -20,6 +20,22 @@
 </header>
 
 <main>
+  <section id="filter-section">
+    <label for="category-filter">Фільтрувати за категорією:</label>
+    <select id="category-filter">
+      <option value="all">Усі</option>
+      <option value="action">Екшн</option>
+      <option value="strategy">Стратегія</option>
+      <option value="adventure">Пригоди</option>
+      <option value="puzzle">Головоломки</option>
+    </select>
+  </section>
+
+  <section id="search-section">
+    <label for="search-input">Пошук за назвою гри:</label>
+    <input type="text" id="search-input" placeholder="Шукайте гру...">
+  </section>
+
   <section id="add-game-section">
     <h2>Додати нову гру</h2>
     <form id="add-game-form">
@@ -31,6 +47,14 @@
 
       <label for="game-image">Зображення гри (URL):</label>
       <input type="url" id="game-image" required>
+
+      <label for="game-category">Категорія гри:</label>
+      <select id="game-category">
+        <option value="action">Екшн</option>
+        <option value="strategy">Стратегія</option>
+        <option value="adventure">Пригоди</option>
+        <option value="puzzle">Головоломки</option>
+      </select>
 
       <button type="submit">Додати гру</button>
     </form>
@@ -45,7 +69,18 @@
   <p>&copy; 2024 Ігровий сайт</p>
 </footer>
 
+<!-- Модальне вікно для детальної інформації про гру -->
+<div id="game-details-modal">
+  <div class="modal-content">
+    <span id="close-modal-btn" class="close-btn">&times;</span>
+    <h2 id="game-detail-title"></h2>
+    <img id="game-detail-image" src="" alt="" />
+    <p id="game-detail-description"></p>
+    <p id="game-detail-category"></p>
+    <p id="game-detail-rating"></p>
+  </div>
+</div>
+
 <script src="script.js"></script>
 </body>
 </html>
-
