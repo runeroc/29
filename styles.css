@@ -1,15 +1,23 @@
 /* Загальні стилі */
+:root {
+  --primary-color: #333;
+  --secondary-color: #4CAF50;
+  --background-color: #f4f4f4;
+  --white: #fff;
+  --gray-light: #ccc;
+}
+
 body {
   font-family: Arial, sans-serif;
-  background-color: #f4f4f4;
-  color: #333;
+  background-color: var(--background-color);
+  color: var(--primary-color);
   margin: 0;
   padding: 0;
 }
 
 header {
-  background-color: #333;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--white);
   padding: 1rem;
 }
 
@@ -24,13 +32,13 @@ header nav ul li {
 }
 
 header nav ul li a {
-  color: white;
+  color: var(--white);
   text-decoration: none;
 }
 
 footer {
-  background-color: #333;
-  color: white;
+  background-color: var(--primary-color);
+  color: var(--white);
   text-align: center;
   padding: 1rem;
   position: fixed;
@@ -46,7 +54,7 @@ footer {
 }
 
 .game {
-  background-color: #fff;
+  background-color: var(--white);
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   padding: 15px;
@@ -65,7 +73,7 @@ footer {
 }
 
 #add-game-section {
-  background-color: #fff;
+  background-color: var(--white);
   padding: 20px;
   margin: 20px;
   border-radius: 8px;
@@ -76,17 +84,19 @@ form label {
   margin: 5px 0;
 }
 
-form input, form textarea, form button {
+form input,
+form textarea,
+form button {
   width: 100%;
   padding: 10px;
   margin: 5px 0;
-  border: 1px solid #ccc;
+  border: 1px solid var(--gray-light);
   border-radius: 5px;
 }
 
 form button {
-  background-color: #4CAF50;
-  color: white;
+  background-color: var(--secondary-color);
+  color: var(--white);
   cursor: pointer;
 }
 
