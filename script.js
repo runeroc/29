@@ -160,3 +160,4 @@ function searchGames(query) {
 }
 
 document.addEventListener('DOMContentLoaded', loadGames);
+
