@@ -1,22 +1,42 @@
+:root {
+    --primary-color: #007bff;
+    --background-color: #f8f9fa;
+    --text-color: #212529;
+    --card-background: #fff;
+    --button-hover: #0056b3;
+}
+
+[data-theme="dark"] {
+    --primary-color: #0d6efd;
+    --background-color: #121212;
+    --text-color: #f8f9fa;
+    --card-background: #1e1e1e;
+    --button-hover: #0a58ca;
+}
+
 body {
     font-family: 'Roboto', sans-serif;
+    background-color: var(--background-color);
+    color: var(--text-color);
     margin: 0;
     padding: 0;
-    background-color: #f8f9fa;
-    color: #212529;
 }
 
-header, footer {
-    background: #343a40;
-    color: #fff;
-    text-align: center;
-    padding: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+header {
+    background: var(--primary-color);
+    color: var(--text-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
 }
 
-header h1 {
-    margin: 0;
-    font-size: 2.5em;
+header button {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1.5em;
+    cursor: pointer;
 }
 
 .container {
@@ -27,49 +47,49 @@ header h1 {
 
 .filters {
     display: flex;
-    gap: 15px;
-    margin-bottom: 20px;
+    gap: 10px;
+    margin: 20px 0;
 }
 
 .filters input, .filters select {
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #ccc;
     border-radius: 5px;
-    font-size: 1em;
     flex: 1;
 }
 
 .game-list {
     display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 20px;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
 
 .game-item {
-    background: #fff;
+    background: var(--card-background);
     border-radius: 10px;
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    transition: transform 0.3s ease;
+    padding: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s;
 }
 
 .game-item:hover {
-    transform: scale(1.03);
+    transform: translateY(-5px);
 }
 
 .game-item img {
     width: 100%;
-    height: auto;
+    border-radius: 10px;
 }
 
 .game-info {
-    padding: 15px;
+    text-align: center;
+    padding: 10px 0;
 }
 
 .game-info h3 {
-    margin: 0 0 10px;
+    margin: 0;
     font-size: 1.2em;
-    color: #007bff;
+    color: var(--primary-color);
 }
 
 .pagination {
@@ -80,20 +100,25 @@ header h1 {
 }
 
 .pagination button {
+    background: var(--primary-color);
+    color: var(--text-color);
     padding: 10px;
-    background: #fff;
-    border: 1px solid #ddd;
-    color: #007bff;
+    border: none;
     border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s, color 0.3s;
 }
 
 .pagination button:hover {
-    background: #007bff;
+    background: var(--button-hover);
     color: #fff;
 }
 
-footer p {
-    margin: 0;
+.loader {
+    text-align: center;
+    margin: 20px 0;
+    font-size: 1.2em;
+    color: var(--primary-color);
+    display: none;
+}
+
 }
